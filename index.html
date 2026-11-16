@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cozy Web Games Hub ✨</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Nunito', 'sans-serif'],
+            display: ['Quicksand', 'sans-serif'],
+          },
+          colors: {
+            cream: '#FFF9F5',
+            cocoa: '#4A3B47',
+            cocoaLight: '#7D6B78',
+            strawberry: '#FF8FA3',
+            strawberrySoft: '#FFE5EC',
+            peach: '#FFB5A7',
+            peachSoft: '#FCD5CE',
+            butter: '#FFE5A5',
+            butterSoft: '#FFF3D1',
+            matcha: '#B8E0D2',
+            matchaSoft: '#E2F5EE',
+            lavender: '#CDB4DB',
+            lavenderSoft: '#F0E6F6',
+          },
+          boxShadow: {
+            'kawaii': '0 10px 25px -5px rgba(255, 143, 163, 0.16), 0 4px 10px -3px rgba(74, 59, 71, 0.05)',
+            'kawaii-hover': '0 16px 32px -6px rgba(255, 143, 163, 0.28), 0 6px 14px -4px rgba(74, 59, 71, 0.08)',
+            'squish': '0 4px 0px #F4ACB7',
+            'squish-hover': '0 6px 0px #F4ACB7',
+            'squish-active': '0 1px 0px #F4ACB7',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FFF9F5;
+      color: #4A3B47;
+      background-image: 
+        radial-gradient(circle at 12% 18%, rgba(255, 229, 236, 0.65) 0%, transparent 28%),
+        radial-gradient(circle at 88% 12%, rgba(226, 245, 238, 0.7) 0%, transparent 30%),
+        radial-gradient(circle at 80% 82%, rgba(240, 230, 246, 0.65) 0%, transparent 32%),
+        radial-gradient(circle at 18% 85%, rgba(255, 243, 209, 0.7) 0%, transparent 30%);
+      background-attachment: fixed;
+    }
+
+    /* Soft pastel custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 9px;
+      height: 9px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FFF9F5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FFC2D1;
+      border-radius: 9999px;
+      border: 2px solid #FFF9F5;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #FF8FA3;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Scaled desktop-like viewport inside the card preview window */
+    .preview-iframe-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .preview-iframe-scaled {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      transform: scale(0.5);
+      transform-origin: top left;
+      border: 0;
+    }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(4deg); }
+    }
+    .animate-float {
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-strawberrySoft selection:text-cocoa">
+
+  <!-- Decorative Floating Pastel Accents -->
+  <div class="pointer-events-none fixed inset-0 overflow-hidden z-0 opacity-60">
+    <span class="absolute top-24 left-6 text-2xl animate-float" style="animation-delay: 0s;">☁️</span>
+    <span class="absolute top-36 right-10 text-xl animate-float" style="animation-delay: 1.2s;">✨</span>
+    <span class="absolute bottom-16 left-10 text-xl animate-float" style="animation-delay: 2.1s;">🌸</span>
+    <span class="absolute bottom-24 right-8 text-2xl animate-float" style="animation-delay: 0.7s;">🍓</span>
+  </div>
+
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-30 backdrop-blur-md bg-[#FFF9F5]/85 border-b-2 border-[#FFE5EC]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        
+        <!-- Brand & Counter -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#FF8FA3] via-[#FFB5A7] to-[#FFE5A5] flex items-center justify-center text-white shadow-md border-2 border-white rotate-[-3deg] hover:rotate-0 transition-transform">
+              <span class="text-2xl drop-shadow-xs">🧸</span>
+            </div>
+            <div>
+              <h1 class="font-display text-xl sm:text-2xl font-bold tracking-tight text-cocoa flex items-center gap-2 flex-wrap">
+                Cozy Web Games
+                <span id="gameCountBadge" class="text-xs font-extrabold px-3 py-1 rounded-full bg-strawberrySoft text-[#D6456B] border border-[#FFC2D1]">
+                  47 Games ✨
+                </span>
+              </h1>
+              <p class="text-xs sm:text-sm text-cocoaLight font-medium">Peek live previews or tap any squishy box to play!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search & Controls -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 flex-1 md:max-w-xl justify-end">
+          <!-- Cute Pill Search Bar -->
+          <div class="relative flex-1">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-sm pointer-events-none">🔍</span>
+            <input 
+              id="searchInput" 
+              type="text" 
+              placeholder="Search cute games (e.g., Mamak, TapakRun, Kenduri)..." 
+              class="w-full pl-10 pr-9 py-2.5 text-sm font-semibold rounded-full border-2 border-[#FFD6E0] bg-white/90 text-cocoa placeholder-[#B59FAD] focus:outline-none focus:border-strawberry focus:ring-4 focus:ring-strawberrySoft transition shadow-xs"
+            />
+            <button id="clearSearchBtn" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-strawberrySoft text-[#D6456B] hover:bg-strawberry hover:text-white flex items-center justify-center text-xs font-extrabold transition">
+              ✕
+            </button>
+          </div>
+
+          <!-- Auto-Load Live Previews Toggle -->
+          <button 
+            id="autoPreviewToggle" 
+            title="Toggle automatic live iframe loading for visible cards"
+            class="px-4 py-2.5 rounded-full text-xs font-extrabold border-2 border-[#B8E0D2] bg-matchaSoft/80 hover:bg-matchaSoft text-[#2D6A56] flex items-center justify-center gap-2 transition shrink-0 shadow-xs cursor-pointer"
+          >
+            <span id="autoPreviewDot" class="w-2.5 h-2.5 rounded-full bg-[#38B088] animate-pulse"></span>
+            <span id="autoPreviewLabel">Live Peek: ON</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Pastel Category Filter Pills -->
+      <div id="categoryBar" class="flex items-center gap-2 overflow-x-auto pt-3.5 pb-1 no-scrollbar">
+        <button data-category="All" class="cat-btn active px-4 py-1.5 rounded-full text-xs font-extrabold bg-strawberry text-white border-2 border-strawberry shadow-sm whitespace-nowrap transition cursor-pointer">
+          🍓 All Games (47)
+        </button>
+        <button data-category="Simulator" class="cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-white text-cocoa border-2 border-[#FFE5EC] hover:border-strawberry hover:bg-strawberrySoft/50 whitespace-nowrap transition cursor-pointer">
+          🎀 Simulator
+        </button>
+        <button data-category="Runner" class="cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-white text-cocoa border-2 border-[#FFE5EC] hover:border-strawberry hover:bg-strawberrySoft/50 whitespace-nowrap transition cursor-pointer">
+          👟 Runner
+        </button>
+        <button data-category="Tycoon & Food" class="cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-white text-cocoa border-2 border-[#FFE5EC] hover:border-strawberry hover:bg-strawberrySoft/50 whitespace-nowrap transition cursor-pointer">
+          🧁 Tycoon & Food
+        </button>
+        <button data-category="Medical & Career" class="cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-white text-cocoa border-2 border-[#FFE5EC] hover:border-strawberry hover:bg-strawberrySoft/50 whitespace-nowrap transition cursor-pointer">
+          🩺 Medical & Career
+        </button>
+        <button data-category="Action & Casual" class="cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-white text-cocoa border-2 border-[#FFE5EC] hover:border-strawberry hover:bg-strawberrySoft/50 whitespace-nowrap transition cursor-pointer">
+          🎈 Action & Casual
+        </button>
+        <button data-category="Politics & Strategy" class="cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-white text-cocoa border-2 border-[#FFE5EC] hover:border-strawberry hover:bg-strawberrySoft/50 whitespace-nowrap transition cursor-pointer">
+          👑 Politics & Strategy
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Directory Grid -->
+  <main class="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <!-- Cozy Helper Ribbon -->
+    <div class="mb-6 px-4 py-3 rounded-3xl bg-white/85 border-2 border-[#FFE5EC] shadow-kawaii flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-cocoa">
+      <div class="flex items-center gap-2.5">
+        <span class="text-lg">🌸</span>
+        <span>Every card follows <strong>Preview → Title → Clickable Box</strong>. Tap <strong>Live Peek</strong> on a card to play inside this page, or press the bottom box to launch!</span>
+      </div>
+      <span id="visibleStats" class="font-extrabold px-3 py-1 rounded-full bg-butterSoft text-[#8A6619] border border-butter shrink-0 self-start sm:self-auto">
+        Showing 47 of 47
+      </span>
+    </div>
+
+    <!-- Cards Grid -->
+    <div id="gamesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Cards injected dynamically via JS -->
+    </div>
+
+    <!-- Cute Empty State -->
+    <div id="emptyState" class="hidden text-center py-20 bg-white/80 rounded-[28px] border-2 border-[#FFE5EC] shadow-kawaii max-w-md mx-auto my-8 px-6">
+      <div class="text-5xl mb-3 animate-bounce">🐰</div>
+      <h3 class="font-display text-lg font-bold text-cocoa">Oopsie! No matching games found</h3>
+      <p class="text-sm text-cocoaLight mt-1">Try searching another keyword or reset back to all 47 cute games.</p>
+      <button id="resetFiltersBtn" class="mt-5 px-6 py-2.5 rounded-full bg-strawberry hover:bg-[#FF758F] text-white text-sm font-extrabold shadow-squish transition cursor-pointer">
+        Show All Games ✨
+      </button>
+    </div>
+  </main>
+
+  <!-- Cozy Theater Preview Modal -->
+  <div id="previewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-[#4A3B47]/45 backdrop-blur-sm p-2 sm:p-6">
+    <div class="bg-[#FFF9F5] border-4 border-white rounded-[28px] w-full max-w-5xl h-[88vh] flex flex-col shadow-2xl overflow-hidden">
+      <!-- Modal Top Bar -->
+      <div class="px-4 sm:px-5 py-3.5 border-b-2 border-[#FFE5EC] flex items-center justify-between gap-3 bg-gradient-to-r from-[#FFE5EC] via-[#FFF3D1] to-[#E2F5EE]">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-xl shadow-xs shrink-0">
+            <span id="modalEmoji">🎮</span>
+          </div>
+          <div class="truncate">
+            <h2 id="modalTitle" class="font-display text-sm sm:text-base font-bold text-cocoa truncate">Game Title</h2>
+            <p id="modalUrl" class="text-xs text-cocoaLight font-medium truncate">https://...</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button id="modalReloadBtn" class="px-3.5 py-2 rounded-full text-xs font-extrabold bg-white hover:bg-butterSoft text-cocoa border border-[#FFD6E0] shadow-xs transition cursor-pointer">
+            ↻ Reload
+          </button>
+          <a id="modalExternalLink" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full text-xs font-extrabold bg-strawberry hover:bg-[#FF758F] text-white shadow-xs transition flex items-center gap-1.5">
+            <span>Open Full Tab</span>
+            <span>↗</span>
+          </a>
+          <button id="closeModalBtn" aria-label="Close preview" class="w-9 h-9 rounded-full bg-white hover:bg-[#FF8FA3] text-cocoa hover:text-white border border-[#FFD6E0] transition text-sm font-extrabold flex items-center justify-center cursor-pointer">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Live Iframe Body -->
+      <div class="relative flex-1 bg-white">
+        <div id="modalLoader" class="absolute inset-0 flex flex-col items-center justify-center text-cocoaLight bg-[#FFF9F5] pointer-events-none">
+          <div class="w-10 h-10 border-4 border-strawberry border-t-transparent rounded-full animate-spin mb-3"></div>
+          <p class="text-xs font-bold text-cocoa">Preparing your cozy game preview... ✨</p>
+        </div>
+        <iframe id="modalIframe" src="about:blank" class="relative z-10 w-full h-full border-0" allow="autoplay; fullscreen; gamepad; accelerometer; gyroscope"></iframe>
+      </div>
+
+      <!-- Modal Footer Note -->
+      <div class="px-5 py-2.5 bg-[#FFF9F5] border-t-2 border-[#FFE5EC] flex items-center justify-between text-[11px] font-semibold text-cocoaLight">
+        <span>🌷 If a website blocks mini-frames, tap <strong>Open Full Tab ↗</strong> at the top right!</span>
+        <span class="hidden sm:inline">Press <kbd class="px-2 py-0.5 rounded-full bg-strawberrySoft text-[#D6456B] font-bold">ESC</kbd> to close</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Complete deduplicated catalog of all 47 games with pastel theme styling & cozy descriptions
+    const GAMES = [
+      { id: 1, title: "Kempen 222", url: "https://syamkushaini.github.io/kempen-222-game/", category: "Politics & Strategy", desc: "Plan your campaign strategy and win hearts across 222 constituencies.", emoji: "🗳️", pastelBg: "from-[#DCEEFB] to-[#E8DDFB]", badgeClass: "bg-[#F0E6F6] text-[#6B4C85]" },
+      { id: 2, title: "Malaysian Teacher Life Simulator", url: "https://malaysianteacher.netlify.app", category: "Simulator", desc: "Experience the daily joys and chaos of being a school cikgu.", emoji: "👩‍🏫", pastelBg: "from-[#E2F5EE] to-[#FFF3D1]", badgeClass: "bg-[#E2F5EE] text-[#2D6A56]" },
+      { id: 3, title: "TapakRun — Jadi Jurutera Tapak", url: "https://tapakrun.appcademy.app/", category: "Runner", desc: "Dash through construction sites, dodge hazards, and inspect projects!", emoji: "👷‍♂️", pastelBg: "from-[#FFF3D1] to-[#FCD5CE]", badgeClass: "bg-[#FFF3D1] text-[#8A6619]" },
+      { id: 4, title: "Nusantara: Perang Kampung", url: "https://nusantara.luxlabstech.com", category: "Politics & Strategy", desc: "Defend and expand your kampung territory in tactical battles.", emoji: "⚔️", pastelBg: "from-[#FFE5EC] to-[#FCD5CE]", badgeClass: "bg-[#F0E6F6] text-[#6B4C85]" },
+      { id: 5, title: "Nusa Politik", url: "https://dasuki29.github.io/Nusa-Politik/", category: "Politics & Strategy", desc: "Navigate alliances, debates, and public opinion in local politics.", emoji: "🏛️", pastelBg: "from-[#E0F2FE] to-[#F0E6F6]", badgeClass: "bg-[#F0E6F6] text-[#6B4C85]" },
+      { id: 6, title: "Clip-Clop Horse (おうまパカパカ)", url: "https://tsuyatt.com/games/clip-clop/", category: "Action & Casual", desc: "Rhythmic clip-clop horse galloping fun with adorable Japanese charm.", emoji: "🐎", pastelBg: "from-[#E2F5EE] to-[#DCFCE7]", badgeClass: "bg-[#FFE5EC] text-[#B83B5E]" },
+      { id: 7, title: "Syumra Simulator", url: "https://simulator.syumra.id", category: "Simulator", desc: "Interactive step-by-step manasik & pilgrimage simulation guide.", emoji: "🕌", pastelBg: "from-[#E2F5EE] to-[#E0F2FE]", badgeClass: "bg-[#E2F5EE] text-[#2D6A56]" },
+      { id: 8, title: "Zounoashi Games (ゾウノアシゲームズ)", url: "https://www.zounoashi.com", category: "Action & Casual", desc: "Playful collection of quirky browser mini-games by Zounoashi.", emoji: "🐘", pastelBg: "from-[#F0E6F6] to-[#FFE5EC]", badgeClass: "bg-[#FFE5EC] text-[#B83B5E]" },
+      { id: 9, title: "Flash Step Showdown (閃身步大亂鬥)", url: "https://shanshenbu.net/", category: "Action & Casual", desc: "Fast-paced flash-step martial arts duel with snappy reflexes.", emoji: "⚡", pastelBg: "from-[#FAE8FF] to-[#FFE5EC]", badgeClass: "bg-[#FFE5EC] text-[#B83B5E]" },
+      { id: 10, title: "Makcik Bawang The Game", url: "https://makcik-bawang-the-game.netlify.app", category: "Action & Casual", desc: "Spread neighborhood gossip and survive the ultimate bawang showdown!", emoji: "🧅", pastelBg: "from-[#FFE5EC] to-[#F0E6F6]", badgeClass: "bg-[#FFE5EC] text-[#B83B5E]" },
+      { id: 11, title: "Dentist Hero", url: "https://dentisthero.ariefakmal265.workers.dev", category: "Medical & Career", desc: "Clean, polish, and fix cavities to make every patient smile bright.", emoji: "🦷", pastelBg: "from-[#E0F2FE] to-[#E2F5EE]", badgeClass: "bg-[#E0F2FE] text-[#2B5B7A]" },
+      { id: 12, title: "Dua bit Studio (Bitmart)", url: "https://duabitstudio.com/play/bitmart/?src=pwa", category: "Tycoon & Food", desc: "Run your own cozy minimart, restock shelves, and serve shoppers.", emoji: "🛒", pastelBg: "from-[#F0E6F6] to-[#FFF3D1]", badgeClass: "bg-[#FFF3D1] text-[#8A6619]" },
+      { id: 13, title: "Ward Run", url: "https://wardrun.app/", category: "Runner", desc: "Sprint through busy hospital corridors to deliver urgent care on time.", emoji: "🏥", pastelBg: "from-[#FFE5EC] to-[#E0F2FE]", badgeClass: "bg-[#FCD5CE] text-[#8F3D2E]" },
+      { id: 14, title: "Nurse Run", url: "https://nurse-rush.vercel.app/", category: "Runner", desc: "Dash across the clinic floor helping patients in this speedy nurse runner.", emoji: "🩺", pastelBg: "from-[#FFE5EC] to-[#FFF3D1]", badgeClass: "bg-[#FCD5CE] text-[#8F3D2E]" },
+      { id: 15, title: "Farmasi", url: "https://farmasijona.testariefakmal.workers.dev/", category: "Medical & Career", desc: "Dispense the right prescriptions accurately at your neighborhood pharmacy.", emoji: "💊", pastelBg: "from-[#E2F5EE] to-[#DCFCE7]", badgeClass: "bg-[#E0F2FE] text-[#2B5B7A]" },
+      { id: 16, title: "Klinik Haiwan", url: "https://klinikhaiwankampung.netlify.app", category: "Medical & Career", desc: "Treat adorable village pets and furry friends at your kampung vet clinic.", emoji: "🐈", pastelBg: "from-[#FFF3D1] to-[#FFE5EC]", badgeClass: "bg-[#E0F2FE] text-[#2B5B7A]" },
+      { id: 17, title: "Bomba Run", url: "https://bombarun.appcademy.app/", category: "Runner", desc: "Race to the rescue as a brave firefighter dodging road obstacles!", emoji: "🚒", pastelBg: "from-[#FCD5CE] to-[#FFF3D1]", badgeClass: "bg-[#FCD5CE] text-[#8F3D2E]" },
+      { id: 18, title: "HR", url: "https://funhr.netlify.app", category: "Medical & Career", desc: "Review resumes, interview quirky candidates, and manage office life.", emoji: "💼", pastelBg: "from-[#F0E6F6] to-[#E0F2FE]", badgeClass: "bg-[#E0F2FE] text-[#2B5B7A]" },
+      { id: 19, title: "Kyla Burger", url: "https://kylaburgerkepopeople.vercel.app", category: "Tycoon & Food", desc: "Flip patties, stack special sauces, and satisfy hungry burger fans.", emoji: "🍔", pastelBg: "from-[#FFF3D1] to-[#FCD5CE]", badgeClass: "bg-[#FFF3D1] text-[#8A6619]" },
+      { id: 20, title: "Cast Away", url: "https://play.peekostudios.com/games/cast-away/", category: "Action & Casual", desc: "Survive, gather resources, and explore a sunny deserted island.", emoji: "🏝️", pastelBg: "from-[#E0F2FE] to-[#E2F5EE]", badgeClass: "bg-[#FFE5EC] text-[#B83B5E]" },
+      { id: 21, title: "Mat Rider", url: "http://duabitstudio.com/play/matrider", category: "Runner", desc: "Weave through traffic on your kapcai to deliver orders lightning fast!", emoji: "🛵", pastelBg: "from-[#FCD5CE] to-[#FFE5EC]", badgeClass: "bg-[#FCD5CE] text-[#8F3D2E]" },
+      { id: 22, title: "Mamak", url: "https://block-c-mamak-simulator-waiter.vercel.app/", category: "Tycoon & Food", desc: "Take orders for roti canai & teh tarik during the late-night rush!", emoji: "🧋", pastelBg: "from-[#FFF3D1] to-[#F5E6D3]", badgeClass: "bg-[#FFF3D1] text-[#8A6619]" },
+      { id: 23, title: "Kampung", url: "https://kampung1998.my/", category: "Simulator", desc: "Step back into nostalgic 1998 kampung life filled with cozy memories.", emoji: "🏡", pastelBg: "from-[#E2F5EE] to-[#FFF3D1]", badgeClass: "bg-[#E2F5EE] text-[#2D6A56]" },
+      { id: 24, title: "Pendekar", url: "https://pendekar.io", category: "Action & Casual", desc: "Channel silat mastery and test your agility in warrior duels.", emoji: "🗡️", pastelBg: "from-[#FFF3D1] to-[#F0E6F6]", badgeClass: "bg-[#FFE5EC] text-[#B83B5E]" },
+      { id: 25, title: "Pill Panic", url: "https://pill-panic.thehattas.workers.dev/", category: "Action & Casual", desc: "Sort and match colorful capsules before the medicine tray overflows!", emoji: "🧪", pastelBg: "from-[#E0F2FE] to-[#F0E6F6]", badgeClass: "bg-[#FFE5EC] text-[#B83B5E]" },
+      { id: 26, title: "Kebun", url: "https://kebun-durian-kampung.integrasolid.chatgpt.site/", category: "Tycoon & Food", desc: "Grow, harvest, and sell prized Musang King durians from your orchard.", emoji: "🍈", pastelBg: "from-[#E2F5EE] to-[#DCFCE7]", badgeClass: "bg-[#FFF3D1] text-[#8A6619]" },
+      { id: 27, title: "Horror (Lari Hantu)", url: "https://block-c-lari-hantu.vercel.app/", category: "Runner", desc: "Run for your life through spooky corridors away from local ghosts!", emoji: "👻", pastelBg: "from-[#F0E6F6] to-[#E2E8F0]", badgeClass: "bg-[#FCD5CE] text-[#8F3D2E]" },
+      { id: 28, title: "Little Cashier", url: "https://littlecashier.my/", category: "Tycoon & Food", desc: "Scan items, count ringgit change, and keep the checkout queue happy.", emoji: "🧾", pastelBg: "from-[#E2F5EE] to-[#E0F2FE]", badgeClass: "bg-[#FFF3D1] text-[#8A6619]" },
+      { id: 29, title: "Bola", url: "http://bolatepuk.com", category: "Action & Casual", desc: "Keep the ball bouncing in the air with crisp timing and high combos.", emoji: "⚽", pastelBg: "from-[#DCFCE7] to-[#FFF3D1]", badgeClass: "bg-[#FFE5EC] text-[#B83B5E]" },
+      { id: 30, title: "Merapu", url: "https://merapu.app/", category: "Action & Casual", desc: "Laugh out loud with random, quirky, and wonderfully silly mini-challenges.", emoji: "🤪", pastelBg: "from-[#FFE5EC] to-[#FFF3D1]", badgeClass: "bg-[#FFE5EC] text-[#B83B5E]" },
+      { id: 31, title: "Last Shift", url: "https://duabitstudio.com/play/lastshift/", category: "Action & Casual", desc: "Survive the eerie midnight shift and complete all closing tasks safely.", emoji: "🔦", pastelBg: "from-[#E0F2FE] to-[#F0E6F6]", badgeClass: "bg-[#FFE5EC] text-[#B83B5E]" },
+      { id: 32, title: "Classroom", url: "https://clasrooomrun.netlify.app/", category: "Runner", desc: "Dash past desks, chalkboards, and homework in a lively school run!", emoji: "🎒", pastelBg: "from-[#E0F2FE] to-[#FFF3D1]", badgeClass: "bg-[#FCD5CE] text-[#8F3D2E]" },
+      { id: 33, title: "Sambal Battle", url: "https://battle-sambal.proudpin32.chatgpt.site", category: "Action & Casual", desc: "Pound chilies and mix fiery ingredients to craft the ultimate sambal!", emoji: "🌶️", pastelBg: "from-[#FCD5CE] to-[#FFE5EC]", badgeClass: "bg-[#FFE5EC] text-[#B83B5E]" },
+      { id: 34, title: "Fisioku", url: "https://ohfisioku.zitlab.my", category: "Medical & Career", desc: "Help patients recover mobility with guided physiotherapy exercises.", emoji: "🦴", pastelBg: "from-[#E0F2FE] to-[#E2F5EE]", badgeClass: "bg-[#E0F2FE] text-[#2B5B7A]" },
+      { id: 35, title: "Trafic JPJ", url: "https://play.khuzaii.my/trafficlife/", category: "Simulator", desc: "Manage road rules, traffic flow, and driving tests like a JPJ officer.", emoji: "🚓", pastelBg: "from-[#E0F2FE] to-[#FFF3D1]", badgeClass: "bg-[#E2F5EE] text-[#2D6A56]" },
+      { id: 36, title: "Kiosk Chef Wan", url: "https://kiosk-chef-wan.netlify.app/", category: "Tycoon & Food", desc: "Cook signature Malaysian dishes fast at Chef Wan's bustling food kiosk.", emoji: "👨‍🍳", pastelBg: "from-[#FFF3D1] to-[#FCD5CE]", badgeClass: "bg-[#FFF3D1] text-[#8A6619]" },
+      { id: 37, title: "Lembah Bintang", url: "https://lembahbintang.app", category: "Simulator", desc: "Plant crops, befriend townsfolk, and build a peaceful valley life.", emoji: "🌾", pastelBg: "from-[#E2F5EE] to-[#F0E6F6]", badgeClass: "bg-[#E2F5EE] text-[#2D6A56]" },
+      { id: 38, title: "Detektif", url: "https://detektifbaharu.pages.dev/", category: "Politics & Strategy", desc: "Gather clues, question suspects, and crack intriguing local mysteries.", emoji: "🕵️", pastelBg: "from-[#FFF3D1] to-[#E0F2FE]", badgeClass: "bg-[#F0E6F6] text-[#6B4C85]" },
+      { id: 39, title: "Laju Express", url: "https://lajulajuexpresstycoon.netlify.app/", category: "Tycoon & Food", desc: "Build and upgrade your own speedy courier logistics empire.", emoji: "🚚", pastelBg: "from-[#FFE5EC] to-[#FFF3D1]", badgeClass: "bg-[#FFF3D1] text-[#8A6619]" },
+      { id: 40, title: "Hantar Parcel", url: "https://salam-ada-cod.vercel.app/", category: "Runner", desc: "Salam, ada COD! Deliver parcels to doorsteps before the timer runs out.", emoji: "📦", pastelBg: "from-[#FFF3D1] to-[#FCD5CE]", badgeClass: "bg-[#FCD5CE] text-[#8F3D2E]" },
+      { id: 41, title: "Kopitiam", url: "https://kopitiamtycoon.netlify.app/", category: "Tycoon & Food", desc: "Brew aromatic kopi, toast kaya buns, and grow your classic kopitiam.", emoji: "☕", pastelBg: "from-[#F5E6D3] to-[#FFF3D1]", badgeClass: "bg-[#FFF3D1] text-[#8A6619]" },
+      { id: 42, title: "CA Simulator", url: "https://casimulator.syam6397.chatgpt.site/", category: "Medical & Career", desc: "Balance ledgers, audit accounts, and survive chartered accountant life.", emoji: "📊", pastelBg: "from-[#E0F2FE] to-[#F0E6F6]", badgeClass: "bg-[#E0F2FE] text-[#2B5B7A]" },
+      { id: 43, title: "Fotograper", url: "https://fotograferkalut.tiraz.workers.dev", category: "Action & Casual", desc: "Snap the perfect shot under chaotic event deadlines without blurring!", emoji: "📸", pastelBg: "from-[#F0E6F6] to-[#FFE5EC]", badgeClass: "bg-[#FFE5EC] text-[#B83B5E]" },
+      { id: 44, title: "Kenduri", url: "https://kenduri-empire.vercel.app", category: "Tycoon & Food", desc: "Host grand Malaysian wedding feasts, manage catering, and delight guests.", emoji: "🍛", pastelBg: "from-[#FFE5EC] to-[#FCD5CE]", badgeClass: "bg-[#FFF3D1] text-[#8A6619]" },
+      { id: 45, title: "Junkyard", url: "https://duabitstudio.com/play/bitjunkyard/", category: "Tycoon & Food", desc: "Sort scrap, recycle hidden treasures, and turn junk into profit.", emoji: "♻️", pastelBg: "from-[#E2F5EE] to-[#FFF3D1]", badgeClass: "bg-[#FFF3D1] text-[#8A6619]" },
+      { id: 46, title: "Suri Rumah", url: "http://Suri.appcademy.app", category: "Simulator", desc: "Juggle cooking, cleaning, and family errands like a super homemaker!", emoji: "🧹", pastelBg: "from-[#FFE5EC] to-[#F0E6F6]", badgeClass: "bg-[#E2F5EE] text-[#2D6A56]" },
+      { id: 47, title: "Train Run", url: "https://trainrun.app/", category: "Runner", desc: "Switch tracks, dodge incoming trains, and collect coins along the railway!", emoji: "🚆", pastelBg: "from-[#E0F2FE] to-[#E2F5EE]", badgeClass: "bg-[#FCD5CE] text-[#8F3D2E]" }
+    ];
+
+    // State
+    let selectedCategory = "All";
+    let searchQuery = "";
+    let autoPreviewEnabled = true;
+
+    // DOM Elements
+    const gamesGrid = document.getElementById("gamesGrid");
+    const searchInput = document.getElementById("searchInput");
+    const clearSearchBtn = document.getElementById("clearSearchBtn");
+    const visibleStats = document.getElementById("visibleStats");
+    const emptyState = document.getElementById("emptyState");
+    const resetFiltersBtn = document.getElementById("resetFiltersBtn");
+    const autoPreviewToggle = document.getElementById("autoPreviewToggle");
+    const autoPreviewDot = document.getElementById("autoPreviewDot");
+    const autoPreviewLabel = document.getElementById("autoPreviewLabel");
+
+    // Modal Elements
+    const previewModal = document.getElementById("previewModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalUrl = document.getElementById("modalUrl");
+    const modalEmoji = document.getElementById("modalEmoji");
+    const modalIframe = document.getElementById("modalIframe");
+    const modalLoader = document.getElementById("modalLoader");
+    const modalExternalLink = document.getElementById("modalExternalLink");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const modalReloadBtn = document.getElementById("modalReloadBtn");
+
+    // IntersectionObserver for lazy-loading live card iframe previews smoothly
+    const iframeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!autoPreviewEnabled) return;
+        const container = entry.target;
+        const url = container.dataset.url;
+        if (entry.isIntersecting) {
+          if (!container.querySelector("iframe")) {
+            injectCardIframe(container, url);
+          }
+        } else {
+          // Unload offscreen iframes to keep scrolling smooth
+          const existing = container.querySelector("iframe");
+          if (existing) {
+            existing.remove();
+          }
+        }
+      });
+    }, { rootMargin: "150px 0px" });
+
+    function injectCardIframe(container, url) {
+      const iframe = document.createElement("iframe");
+      iframe.src = url;
+      iframe.loading = "lazy";
+      iframe.sandbox = "allow-scripts allow-same-origin allow-forms allow-popups";
+      iframe.className = "preview-iframe-scaled pointer-events-none opacity-0 transition-opacity duration-500";
+      iframe.onload = () => {
+        iframe.classList.remove("opacity-0");
+        iframe.classList.add("opacity-100");
+      };
+      container.appendChild(iframe);
+    }
+
+    function getCleanDomain(url) {
+      try {
+        return new URL(url).hostname.replace(/^www\./, "");
+      } catch {
+        return url;
+      }
+    }
+
+    function renderGames() {
+      iframeObserver.disconnect();
+      gamesGrid.innerHTML = "";
+
+      const filtered = GAMES.filter(game => {
+        const matchesCat = selectedCategory === "All" || game.category === selectedCategory;
+        const q = searchQuery.trim().toLowerCase();
+        const matchesSearch = !q || 
+          game.title.toLowerCase().includes(q) || 
+          game.desc.toLowerCase().includes(q) || 
+          game.url.toLowerCase().includes(q) || 
+          game.category.toLowerCase().includes(q);
+        return matchesCat && matchesSearch;
+      });
+
+      visibleStats.textContent = `Showing ${filtered.length} of ${GAMES.length} ✨`;
+
+      if (filtered.length === 0) {
+        emptyState.classList.remove("hidden");
+        return;
+      } else {
+        emptyState.classList.add("hidden");
+      }
+
+      filtered.forEach((game) => {
+        const card = document.createElement("article");
+        card.className = "group bg-white/95 border-2 border-[#FFE5EC] hover:border-strawberry rounded-[26px] overflow-hidden shadow-kawaii hover:shadow-kawaii-hover hover:-translate-y-1 transition-all duration-200 flex flex-col";
+
+        const domain = getCleanDomain(game.url);
+
+        // STRICT VERTICAL ORDER:
+        // 1. TOP: Soft Rounded Preview Window
+        // 2. MIDDLE: Game Title, Pastel Category Badge & Cozy Description
+        // 3. BOTTOM: Full-width Squishy Clickable Box
+        card.innerHTML = `
+          <!-- 1. PREVIEW SECTION (TOP) -->
+          <div class="p-2.5 pb-0">
+            <div class="relative h-44 w-full rounded-[20px] bg-gradient-to-br ${game.pastelBg} overflow-hidden border border-[#FFE5EC] select-none">
+              <!-- Soft Pastel Illustrated Backdrop -->
+              <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                <div class="w-16 h-16 rounded-3xl bg-white/85 backdrop-blur-xs shadow-sm flex items-center justify-center text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">
+                  ${game.emoji}
+                </div>
+                <span class="text-[11px] font-bold text-cocoa/80 bg-white/80 px-3 py-0.5 rounded-full border border-white">
+                  ${domain}
+                </span>
+              </div>
+
+              <!-- Live Scaled Iframe Layer -->
+              <div class="preview-iframe-wrapper z-10" data-url="${game.url}"></div>
+
+              <!-- Top-left cozy number pill -->
+              <span class="absolute top-2.5 left-2.5 z-20 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-white/90 text-cocoa border border-[#FFE5EC] shadow-xs">
+                #${game.id}
+              </span>
+
+              <!-- Cute Live Peek Button -->
+              <button 
+                type="button"
+                data-action="preview"
+                data-id="${game.id}"
+                class="absolute bottom-2.5 right-2.5 z-20 px-3 py-1.5 rounded-full text-xs font-extrabold bg-white/95 hover:bg-strawberry text-cocoa hover:text-white border border-[#FFD6E0] hover:border-strawberry shadow-sm flex items-center gap-1.5 transition cursor-pointer"
+                title="Open interactive preview inside this page"
+              >
+                <span>👀</span>
+                <span>Live Peek</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. TITLE & COZY DESCRIPTION SECTION (MIDDLE) -->
+          <div class="px-4 pt-3.5 pb-2.5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-1.5">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold tracking-wide ${game.badgeClass}">
+                  ${game.category}
+                </span>
+              </div>
+              <h2 class="font-display text-base font-bold text-cocoa leading-snug line-clamp-2 group-hover:text-[#D6456B] transition-colors">
+                ${game.title}
+              </h2>
+              <p class="mt-1 text-xs text-cocoaLight leading-relaxed line-clamp-2">
+                ${game.desc}
+              </p>
+            </div>
+          </div>
+
+          <!-- 3. SQUISHY CLICKABLE BOX SECTION (BOTTOM) -->
+          <div class="px-4 pb-4 pt-1.5">
+            <a 
+              href="${game.url}" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="w-full py-2.5 px-4 rounded-2xl bg-strawberrySoft hover:bg-strawberry text-[#B83B5E] hover:text-white border-2 border-[#FFC2D1] hover:border-strawberry font-extrabold text-xs sm:text-sm flex items-center justify-between transition-all duration-150 shadow-squish hover:shadow-squish-hover active:shadow-squish-active active:translate-y-[3px]"
+            >
+              <span class="flex items-center gap-2 truncate">
+                <span>Play Game ✨</span>
+              </span>
+              <span class="text-xs font-bold bg-white/70 group-hover:bg-white/25 px-2 py-0.5 rounded-full transition-colors">
+                Open ↗
+              </span>
+            </a>
+          </div>
+        `;
+
+        gamesGrid.appendChild(card);
+
+        const wrapper = card.querySelector(".preview-iframe-wrapper");
+        if (autoPreviewEnabled) {
+          iframeObserver.observe(wrapper);
+        }
+      });
+    }
+
+    // Open Theater Modal
+    function openPreviewModal(gameId) {
+      const game = GAMES.find(g => g.id === Number(gameId));
+      if (!game) return;
+
+      modalTitle.textContent = game.title;
+      modalUrl.textContent = game.url;
+      modalEmoji.textContent = game.emoji;
+      modalExternalLink.href = game.url;
+
+      modalLoader.classList.remove("hidden");
+      modalIframe.src = game.url;
+      modalIframe.onload = () => {
+        modalLoader.classList.add("hidden");
+      };
+
+      previewModal.classList.remove("hidden");
+      previewModal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closePreviewModal() {
+      previewModal.classList.add("hidden");
+      previewModal.classList.remove("flex");
+      modalIframe.src = "about:blank";
+      document.body.style.overflow = "";
+    }
+
+    // Event Delegation for Live Peek buttons
+    gamesGrid.addEventListener("click", (e) => {
+      const previewBtn = e.target.closest("[data-action='preview']");
+      if (previewBtn) {
+        e.preventDefault();
+        openPreviewModal(previewBtn.dataset.id);
+      }
+    });
+
+    closeModalBtn.addEventListener("click", closePreviewModal);
+    previewModal.addEventListener("click", (e) => {
+      if (e.target === previewModal) closePreviewModal();
+    });
+
+    modalReloadBtn.addEventListener("click", () => {
+      if (modalIframe.src && modalIframe.src !== "about:blank") {
+        modalLoader.classList.remove("hidden");
+        const current = modalIframe.src;
+        modalIframe.src = "about:blank";
+        setTimeout(() => {
+          modalIframe.src = current;
+        }, 60);
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !previewModal.classList.contains("hidden")) {
+        closePreviewModal();
+      }
+    });
+
+    // Search Input Handlers
+    searchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      clearSearchBtn.classList.toggle("hidden", searchQuery.length === 0);
+      renderGames();
+    });
+
+    clearSearchBtn.addEventListener("click", () => {
+      searchQuery = "";
+      searchInput.value = "";
+      clearSearchBtn.classList.add("hidden");
+      renderGames();
+      searchInput.focus();
+    });
+
+    resetFiltersBtn.addEventListener("click", () => {
+      searchQuery = "";
+      searchInput.value = "";
+      clearSearchBtn.classList.add("hidden");
+      selectedCategory = "All";
+      updateCategoryButtons();
+      renderGames();
+    });
+
+    // Category Filter Handlers
+    function updateCategoryButtons() {
+      document.querySelectorAll(".cat-btn").forEach(btn => {
+        const isActive = btn.dataset.category === selectedCategory;
+        if (isActive) {
+          btn.className = "cat-btn active px-4 py-1.5 rounded-full text-xs font-extrabold bg-strawberry text-white border-2 border-strawberry shadow-sm whitespace-nowrap transition cursor-pointer";
+        } else {
+          btn.className = "cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-white text-cocoa border-2 border-[#FFE5EC] hover:border-strawberry hover:bg-strawberrySoft/50 whitespace-nowrap transition cursor-pointer";
+        }
+      });
+    }
+
+    document.getElementById("categoryBar").addEventListener("click", (e) => {
+      const btn = e.target.closest(".cat-btn");
+      if (!btn) return;
+      selectedCategory = btn.dataset.category;
+      updateCategoryButtons();
+      renderGames();
+    });
+
+    // Auto-Preview Toggle
+    autoPreviewToggle.addEventListener("click", () => {
+      autoPreviewEnabled = !autoPreviewEnabled;
+      if (autoPreviewEnabled) {
+        autoPreviewToggle.className = "px-4 py-2.5 rounded-full text-xs font-extrabold border-2 border-[#B8E0D2] bg-matchaSoft/80 hover:bg-matchaSoft text-[#2D6A56] flex items-center justify-center gap-2 transition shrink-0 shadow-xs cursor-pointer";
+        autoPreviewDot.className = "w-2.5 h-2.5 rounded-full bg-[#38B088] animate-pulse";
+        autoPreviewLabel.textContent = "Live Peek: ON";
+      } else {
+        autoPreviewToggle.className = "px-4 py-2.5 rounded-full text-xs font-extrabold border-2 border-[#FFD6E0] bg-white hover:bg-strawberrySoft/40 text-cocoaLight flex items-center justify-center gap-2 transition shrink-0 shadow-xs cursor-pointer";
+        autoPreviewDot.className = "w-2.5 h-2.5 rounded-full bg-[#D8B4C2]";
+        autoPreviewLabel.textContent = "Live Peek: OFF";
+      }
+      renderGames();
+    });
+
+    // Initial Render
+    renderGames();
+  </script>
+</body>
+</html>
